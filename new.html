@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Recipe list styles */
+        .recipe-list {
+            list-style-type: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .recipe-list li {
+            cursor: pointer;
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .recipe-list li:hover {
+            background-color: #f7f7f7;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); 
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slide-down 0.3s ease;
+        }
+
+        @keyframes slide-down {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Button styles */
+        .close-btn {
+            display: inline-block;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .close-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h1 align = "center">SELECT A RECIPE</h1>
+    <ul class="recipe-list">
+        <li onclick="showRecipe('recipe1')">Maharashtrian Kakdi Thalipeeth</li>
+        <li onclick="showRecipe('recipe2')">Kaddu Palak Roti</li>
+        <li onclick="showRecipe('recipe3')">Indian Beaten Coffee</li>
+        <li onclick="showRecipe('recipe4')">Whole Wheat Spinach And Tofu Paratha Recipe</li>
+        <li onclick="showRecipe('recipe6')">Delicious Breakfast Anda Ghotala Recipe With Butter Pav</li>
+        <li onclick="showRecipe('recipe7')">Palak Paneer Bhurji Recipe - Spiced Cottage Cheese Scramble With Spinach Recipe</li>
+        <li onclick="showRecipe('recipe8')">Lauki Paratha Recipe - Bottle Gourd Flatbread</li>
+        <li onclick="showRecipe('recipe9')">Masala Jowar Bhakri Recipe</li>
+        <li onclick="showRecipe('recipe10')">Soya Keema Aloo Paratha Recipe</li>
+        <!-- Add more list items as needed -->
+    </ul>
+
+    <!-- The Modal -->
+    <div id="recipeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="recipeDetails"></div>
+            <div class="close-btn" onclick="closeModal()">Close</div>
+        </div>
+    </div>
+
+    <script>
+        function showRecipe(recipeId) {
+            // Show the modal
+            document.getElementById('recipeModal').style.display = "block";
+
+            // Load the recipe details based on the recipeId
+            let recipeContent = '';
+            if (recipeId === 'recipe1') {
+                recipeContent = `
+                    <h2>Maharashtrian Kakdi Thalipeeth Recipe - Spiced Cucumber Flat Bread</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>1/2 cup Gram flour (besan),1/2 cup Whole Wheat Flour,1/4 cup Rice flour,1 Cucumber - peeled and grated,1 teaspoon Turmeric powder (Haldi),1 teaspoon Cumin powder (Jeera),1 teaspoon Coriander Powder (Dhania),1 teaspoon Red Chilli powder,2 Green Chillies - finely chopped,1/2 cup Coriander (Dhania) Leaves - chopped,5 cloves Garlic - finely chopped,Salt - to taste,Ghee - for smearing on thalipeeth</p>
+                    
+                    <p><strong>Cost:</strong> ₹5235.40</p>
+                    <p><strong>Level:Complex</strong></p>
+                `;
+            } else if (recipeId === 'recipe2') {
+                recipeContent = `
+                    <h2>Kaddu Palak Roti Recipe (Pumpkin Spinach Flat Bread)</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>1 cup Whole Wheat Flour,1 cup Spinach - chopped,1 cup Kaddu (Parangikai/ Pumpkin) - grated (red one preferably),1 teaspoon Red Chilli powder,1/2 teaspoon Turmeric powder (Haldi),1/2 teaspoon Coriander Powder (Dhania),1/2 teaspoon Cumin seeds (Jeera),1/4 teaspoon Salt,Water - as required for dough,Sunflower Oil - as required for rotis
+</p>
+                    
+                    <p><strong>Cost:</strong> ₹7720.20</p>
+                    <p><strong>Level:Moderate</strong></p>
+                `;
+            } else if (recipeId === 'recipe3') {
+                recipeContent = `
+                    <h2>Indian Beaten Coffee Recipe | Dalgona Coffee</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>1-1/2 tablespoons Filter Coffee Powder,1/2 cup Hot water,1/2 cup Milk,2 teaspoons Sugar - to taste
+</p>
+                    
+                    <p><strong>Cost:</strong> ₹4004.40</p>
+                    <p><strong>Level:Simple</strong></p>
+                `;
+            }
+            else if (recipeId === 'recipe4') {
+                recipeContent = `
+                    <h2>Whole Wheat Spinach And Tofu Paratha Recipe</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>1/2 cup Sooji (Semolina/ Rava),1/4 cup Curd (Dahi / Yogurt),1/4 cup Onion powder - finely chopped,1/2 cup Green Bell Pepper (Capsicum) - finely chopped,2 tablespoons Coriander (Dhania) Leaves - finely chopped,1 Green Chilli - finely chopped,1 teaspoon Black pepper powder,Salt - to taste,Sunflower Oil - for cooking the toast</p>
+                    
+                    <p><strong>Cost:</strong> ₹11970.00</p>
+                    <p><strong>Level:Complex</strong></p>
+                `;
+       
+            } else if (recipeId === 'recipe6') {
+                recipeContent = `
+                    <h2>Delicious Breakfast Anda Ghotala Recipe With Butter Pav</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>200 grams cheese - pinch, 50 grams spinach - finely chopped, 2 green chillies - finely chopped, 1 onion - finely chopped, 1 tomato - finely chopped, 2 cloves garlic - finely chopped, 1/2 small Teaspoon cumin, 2 tsp red chilli powder, 2 tsp garam masala powder, 2 tsp mango powder, 1 tbsp butter, salt - as per taste, oil - as per use</p>
+                    
+                    <p><strong>Cost:</strong> ₹1465.40</p>
+                    <p><strong>Level:Complex</strong></p>
+                `;
+            } else if (recipeId === 'recipe7') {
+                recipeContent = `
+                    <h2>Palak Paneer Bhurji Recipe - Spiced Cottage Cheese Scramble With Spinach Recipe</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>300 ml Pomegranate juice - freshly squeezed,1/4 cup Fresh orange juice,Lemon juice - from 2 lemons,10 to 12 Ice cubes,Fresh Pomegranate Fruit Kernels - for garnish,Salt - for rimming the glass (Margarita Salt,400 ml Pomegranate juice - freshly squeezed,1/4 cup Lemon juice,1/3 cup Tequila,1/8 cup Triple sec,Fresh Pomegranate Fruit Kernels - for garnish,10 to 12 Ice cubes,Salt - for rimming the glass (Margarita Salt</p>
+                   
+                    <p><strong>Cost:</strong> ₹3015.00</p>
+                    <p><strong>Level:Moderate</strong></p>
+                `;
+            } else if (recipeId === 'recipe8') {
+                recipeContent = `
+                    <h2>Lauki Paratha Recipe - Bottle Gourd Flatbread</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>300 ml Pomegranate juice - freshly squeezed,1/4 cup Fresh orange juice,Lemon juice - from 2 lemons,10 to 12 Ice cubes,Fresh Pomegranate Fruit Kernels - for garnish,Salt - for rimming the glass (Margarita Salt,400 ml Pomegranate juice - freshly squeezed,1/4 cup Lemon juice,1/3 cup Tequila,1/8 cup Triple sec,Fresh Pomegranate Fruit Kernels - for garnish,10 to 12 Ice cubes,Salt - for rimming the glass (Margarita Salt</p>
+                    
+                    <p><strong>Cost:</strong> ₹5170.00</p>
+                    <p><strong>Level:Moderate</strong></p>
+                `;
+            } else if (recipeId === 'recipe9') {
+                recipeContent = `
+                    <h2>Masala Jowar Bhakri Recipe</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>2 cups Whole Wheat Flour,Water - as needed,Salt - a pinch,1 teaspoon Sunflower Oil,1 cup Paneer (Homemade Cottage Cheese) - grated/crumbled,2 cups Spinach Leaves (Palak) - finely chopped,2 tablespoons Kasuri Methi (Dried Fenugreek Leaves) - crushed,2 teaspoon Red Chilli powder,1/4 teaspoon Turmeric powder (Haldi),1 teaspoon Amchur (Dry Mango Powder),1 teaspoon Cumin powder (Jeera),Salt - to taste,Nutralite Classic Spread - to cook parathas</p>
+                    
+                    <p><strong>Cost:</strong> ₹2595.00</p>
+                    <p><strong>Level:Complex</strong></p>
+                `;
+            } else if (recipeId === 'recipe10') {
+                recipeContent = `
+                    <h2>Soya Keema Aloo Paratha Recipe</h2>
+                    <p><strong>Ingredients:</strong></p>
+                    <p>1/4 cup Broken Wheat (Dalia/ Godumai Rava),1/2 cup Water,Salt - as per your taste,1 Carrots (Gajjar) - finely chopped,1 teaspoon Ghee,1/4 teaspoon Mustard seeds,1/4 teaspoon Turmeric powder (Haldi),Curry leaves - a few</p>
+                    
+                    <p><strong>Cost:</strong> ₹4995.00</p>
+                    <p><strong>Level:Moderate</strong></p>
+                `;
+            }
+
+            // Update the modal content
+            document.getElementById('recipeDetails').innerHTML = recipeContent;
+        }
+
+        function closeModal() {
+            document.getElementById('recipeModal').style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
